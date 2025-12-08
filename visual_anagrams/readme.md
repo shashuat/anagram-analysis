@@ -73,6 +73,8 @@ To generate 90 degree rotation illusions we can use the below command. This will
 python generate.py --name rotate_cw.village.horse --prompts "a snowy mountain village" "a horse" --style "an oil painting of" --views identity rotate_cw --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
 ```
 
+python generate.py --name rotate_cw.village.horse --prompts "a snowy mountain village" "a horse" --style "an oil painting of" --views identity rotate_cw --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
+
 Here is a description of useful arguments:
 
 - `--name`: Name for the illusion. Will save samples to `./results/{name}`.
