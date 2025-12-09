@@ -73,7 +73,7 @@ To generate 90 degree rotation illusions we can use the below command. This will
 python generate.py --name rotate_cw.village.horse --prompts "a snowy mountain village" "a horse" --style "an oil painting of" --views identity rotate_cw --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
 ```
 
-python -m visual_anagrams.generate --name rotate_cw.village.horse --prompts "a snowy mountain village" "a horse" --style "an oil painting of" --views identity rotate_cw --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
+python -m visual_anagrams.generate_variant1_sdxl --name rotate_cw.village.horse3 --prompts "a snowy mountain village" "a horse" --style "an oil painting of" --views identity rotate_cw --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
 
 Here is a description of useful arguments:
 

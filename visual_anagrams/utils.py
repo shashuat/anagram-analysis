@@ -61,16 +61,18 @@ def save_illusion(image, views, sample_dir):
     save_name_views = sample_dir / f'sample_{size}.views.png'
     save_image(im_views / 2. + 0.5, save_name_views, padding=0)
 
-def save_metadata(views, args, save_dir):
+def save_metadata(views, args, save_dir, variant=None):
     '''
     Saves the following the sample_dir
         1) pickled view object
         2) args for the illusion
+        3) variant info (if provided)
     '''
 
     metadata = {
         'views': views,
-        'args': args
+        'args': args,
+        'variant': variant
     }
     with open(save_dir / 'metadata.pkl', 'wb') as f:
         pickle.dump(metadata, f)

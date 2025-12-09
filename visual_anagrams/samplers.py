@@ -284,3 +284,166 @@ def sample_stage_2(model,
 
     # Return denoised images
     return noisy_images
+
+@torch.no_grad()
+def sample_sdxl_single_stage(model,
+                             prompt_embeds,
+                             negative_prompt_embeds,
+                             pooled_prompt_embeds,
+                             negative_pooled_prompt_embeds,
+                             views,
+                             height=1024,
+                             width=1024,
+                             ref_im=None,
+                             num_inference_steps=50,
+                             guidance_scale=7.5,
+                             reduction='mean',
+                             generator=None):
+    """
+    Sample from SDXL with multi-view constraints.
+    """
+    from tqdm import tqdm
+    
+    # Params
+    batch_size = 1
+    num_prompts = len(views)
+    device = model.device if hasattr(model, 'device') else torch.device('cuda')
+    dtype = torch.float16
+    
+    print(f"Sampling with {num_prompts} views, guidance scale {guidance_scale}")
+    
+    # Setup timesteps
+    model.scheduler.set_timesteps(num_inference_steps, device=device)
+    timesteps = model.scheduler.timesteps
+    
+    # Prepare latents
+    num_channels_latents = model.unet.config.in_channels
+    latents = model.prepare_latents(
+        batch_size,
+        num_channels_latents,
+        height,
+        width,
+        dtype,
+        device,
+        generator,
+    )
+    
+    print(f"Initial latents shape: {latents.shape}")
+    
+    # Prepare added time ids & embeddings
+    original_size = (height, width)
+    target_size = (height, width)
+    crops_coords_top_left = (0, 0)
+    
+    # Create add_time_ids for each view (both negative and positive)
+    add_time_ids = list(original_size + crops_coords_top_left + target_size)
+    add_time_ids = torch.tensor([add_time_ids], dtype=dtype, device=device)
+    add_time_ids = add_time_ids.repeat(num_prompts * 2, 1)  # *2 for CFG
+    
+    # Resize ref image if needed
+    if ref_im is not None:
+        ref_im = TF.resize(ref_im, height // 8)  # SDXL uses 8x downsampling
+        ref_im = ref_im.to(device).to(dtype)
+    
+    # Denoising Loop
+    for i, t in enumerate(tqdm(timesteps, desc="Denoising")):
+        # If solving inverse problem, project latents
+        if ref_im is not None:
+            ref_latent = model.vae.encode(ref_im[None]).latent_dist.sample()
+            ref_latent = ref_latent * model.vae.config.scaling_factor
+            
+            alpha_prod_t = model.scheduler.alphas_cumprod[t]
+            ref_noisy = torch.sqrt(alpha_prod_t) * ref_latent + \
+                       torch.sqrt(1 - alpha_prod_t) * torch.randn_like(ref_latent)
+            
+            ref_component = views[0].inverse_view(ref_noisy[0])
+            latents_component = views[1].inverse_view(latents[0])
+            latents = (ref_component + latents_component)[None]
+        
+        # Apply views to latents
+        viewed_latents = []
+        for view_fn in views:
+            viewed_latents.append(view_fn.view(latents[0]))
+        viewed_latents = torch.stack(viewed_latents)  # [num_prompts, C, H, W]
+        
+        # Duplicate for CFG: [viewed_0, viewed_1, ..., viewed_0, viewed_1, ...]
+        model_input = torch.cat([viewed_latents, viewed_latents])  # [2*num_prompts, C, H, W]
+        model_input = model.scheduler.scale_model_input(model_input, t)
+        
+        # Prepare conditioning
+        added_cond_kwargs = {
+            "text_embeds": torch.cat([negative_pooled_prompt_embeds, pooled_prompt_embeds]),
+            "time_ids": add_time_ids
+        }
+        
+        # Predict noise
+        noise_pred = model.unet(
+            model_input,
+            t,
+            encoder_hidden_states=torch.cat([negative_prompt_embeds, prompt_embeds]),
+            added_cond_kwargs=added_cond_kwargs,
+            return_dict=False,
+        )[0]
+        
+        # Split into uncond and cond
+        noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
+        
+        # Invert unconditional estimates
+        inverted_uncond = []
+        for pred, view in zip(noise_pred_uncond, views):
+            inverted_uncond.append(view.inverse_view(pred))
+        noise_pred_uncond = torch.stack(inverted_uncond)
+        
+        # Invert conditional estimates  
+        inverted_cond = []
+        for pred, view in zip(noise_pred_text, views):
+            inverted_cond.append(view.inverse_view(pred))
+        noise_pred_text = torch.stack(inverted_cond)
+        
+        # Apply CFG
+        noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
+        
+        # Reduce predictions across views
+        if reduction == 'mean':
+            noise_pred = noise_pred.mean(0, keepdim=True)
+        elif reduction == 'sum':
+            noise_pred = noise_pred.sum(0, keepdim=True)
+        elif reduction == 'alternate':
+            noise_pred = noise_pred[i % num_prompts:i % num_prompts + 1]
+        else:
+            raise ValueError('Reduction must be `mean`, `sum`, or `alternate`')
+        
+        # Denoise step
+        latents = model.scheduler.step(
+            noise_pred, t, latents, generator=generator, return_dict=False
+        )[0]
+    
+    print(f"Final latents shape: {latents.shape}, range: [{latents.min():.3f}, {latents.max():.3f}]")
+    
+    # Decode latents with proper scaling and dtype handling
+    latents = latents / model.vae.config.scaling_factor
+    
+    # SDXL VAE needs float32 for numerical stability to avoid NaN issues
+    needs_upcasting = model.vae.dtype == torch.float16 and model.vae.config.force_upcast
+    
+    if needs_upcasting:
+        model.vae.to(dtype=torch.float32)
+        latents = latents.float()
+    
+    image = model.vae.decode(latents, return_dict=False)[0]
+    
+    if needs_upcasting:
+        model.vae.to(dtype=torch.float16)
+    
+    # Check for NaN and clamp
+    if torch.isnan(image).any():
+        print("WARNING: NaN detected in decoded image, replacing with zeros")
+        image = torch.nan_to_num(image, nan=0.0)
+    
+    print(f"Decoded image shape: {image.shape}, range: [{image.min():.3f}, {image.max():.3f}]")
+    
+    # SDXL VAE outputs are typically in range [-1, 1] after decoding
+    # Clamp to ensure valid range
+    image = torch.clamp(image, -1.0, 1.0)
+    
+    return image
