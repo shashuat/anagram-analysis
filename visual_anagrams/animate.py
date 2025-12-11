@@ -1,9 +1,9 @@
 from PIL import Image
 
 from visual_anagrams.views import get_views
-from visual_anagrams.animate import animate_two_view, animate_two_view_motion_blur
+# from visual_anagrams.animate import animate_two_view, animate_two_view_motion_blur
 from visual_anagrams.views.view_motion import MotionBlurView
-
+from visual_anagrams.visual_anagrams.animate import animate_two_view, animate_two_view_motion_blur
 
 if __name__ == '__main__':
     import argparse

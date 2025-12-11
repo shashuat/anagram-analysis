@@ -13,13 +13,19 @@ def draw_text(image, text, fill=(0,0,0), frame_size=384, im_size=256):
     image = image.copy()
 
     # Font info. Use 16pt for 384 pixel image, and scale up accordingly
-    font_path = get_courier_font_path()
     font_size = 16
     font_size = int(font_size * frame_size / 384)
 
     # Make PIL objects
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype(font_path, font_size)
+    
+    # Try to get Courier font, fall back to default if not available
+    try:
+        font_path = get_courier_font_path()
+        font = ImageFont.truetype(font_path, font_size)
+    except (OSError, IOError):
+        # Fallback to default font if Courier is not available
+        font = ImageFont.load_default()
     
     # Center text horizontally, and vertically between
     # illusion bottom and frame bottom

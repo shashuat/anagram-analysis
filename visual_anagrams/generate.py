@@ -1,3 +1,5 @@
+# Original Visual Anagrams paper : Generate visual anagrams using DeepFloyd IF
+
 import argparse
 from pathlib import Path
 from PIL import Image
