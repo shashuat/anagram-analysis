@@ -8,16 +8,17 @@ set -e  # Exit on error
 declare -a PROMPT_PAIRS=(
     "dog|cat|an oil painting of|dog_cat"
     "people at a campfire|an old man|an oil painting of|campfire_man"
+    "a fruit bowl|a monkey|an oil painting of|fruit_monkey"
+    "houseplants|marilyn monroe|a painting of|plants_marilyn"
+    "a kitten|a puppy|a watercolor of|kitten_puppy"
+    "a house|a castle|an ink drawing of|house_castle"
+    "wine and cheese|a turtle|a painting of|wine_turtle"
+    "a kitchen|a quokka|an oil painting of|kitchen_quokka"
+    "a museum|a camel|a painting of|museum_camel"
+    "sunflowers|a vampire|a painting of|sunflowers_vampire"
 )
 
-    # "a fruit bowl|a monkey|an oil painting of|fruit_monkey"
-    # "houseplants|marilyn monroe|a painting of|plants_marilyn"
-    # "a kitten|a puppy|a watercolor of|kitten_puppy"
-    # "a house|a castle|an ink drawing of|house_castle"
-    # "wine and cheese|a turtle|a painting of|wine_turtle"
-    # "a kitchen|a quokka|an oil painting of|kitchen_quokka"
-    # "a museum|a camel|a painting of|museum_camel"
-    # "sunflowers|a vampire|a painting of|sunflowers_vampire"
+
 
 # Common generation parameters
 NUM_SAMPLES=2
