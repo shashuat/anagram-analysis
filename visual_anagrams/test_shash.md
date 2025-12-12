@@ -57,12 +57,50 @@ python -m visual_anagrams.generate_variant2_adaptive --name flip.einstein_monroe
 
 python -m visual_anagrams.generate_variant3_frequency_orthogonal --name freq_ortho.einstein_monroe5 --prompts "albert einstein" "marilyn monroe" --style "an oil painting of" --views identity flip --num_samples 10 --num_inference_steps 30 --guidance_scale 10.0 --generate_1024
 
-python -m visual_anagrams.generate_variant3_frequency_orthogonal \
-  --name freq_momentum.einstein_monroe \
-  --prompts "albert einstein" "marilyn monroe" \
+python -m visual_anagrams.generate_variant3_frequency \
+  --name filp.dog_cat.variant3 \
+  --prompts "dog" "cat" \
   --style "an oil painting of" \
   --views identity flip \
   --num_samples 10 \
   --num_inference_steps 30 \
   --guidance_scale 10.0 \
   --generate_1024
+
+# the fles are generate_variant0_author, generate_variant1_sdxl, generate_variant2_adaptive, generate_variant3_frequency
+
+
+# Make them executable
+chmod +x scripts/generate_all_variants.sh
+chmod +x scripts/evaluate_all_variants.sh
+
+# Run generation (this will take a long time!)
+./scripts/generate_all_variants.sh
+
+# After generation completes, run evaluation
+./scripts/evaluate_all_variants.sh
+```
+
+The generation script will create this structure:
+```
+results/
+├── flip.dog_cat.variant0/
+├── flip.dog_cat.variant1/
+├── flip.dog_cat.variant2/
+├── flip.dog_cat.variant3/
+├── flip.campfire_man.variant0/
+├── flip.campfire_man.variant1/
+... (40 directories total: 10 prompt pairs × 4 variants)
+```
+
+The evaluation script will create:
+```
+results/comparisons/
+├── dog_cat/
+│   ├── comparison_table.csv
+│   ├── score_distributions.png
+│   └── scatter_comparison.png
+├── campfire_man/
+... (one directory per prompt pair)
+├── all_results.csv (comprehensive results)
+└── summary_by_variant.csv (aggregated statistics)
