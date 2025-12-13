@@ -2,6 +2,9 @@
 # generate_all_variants.sh
 # Generate illusions for multiple prompt pairs across all variants
 
+export HF_HOME="/Data/shash/.cache"
+export HF_HUB_CACHE="/Data/shash/.cache/hub"
+
 set -e  # Exit on error
 
 # Define prompt pairs (prompt1, prompt2, style, short_name)
@@ -16,12 +19,32 @@ declare -a PROMPT_PAIRS=(
     "a kitchen|a quokka|an oil painting of|kitchen_quokka"
     "a museum|a camel|a painting of|museum_camel"
     "sunflowers|a vampire|a painting of|sunflowers_vampire"
+    "a snowy mountain village|a horse|an oil painting of|village_horse"
+    "a ship|a bird|an oil painting of|ship_bird"
+    "waterfalls|a red panda|a painting of|waterfalls_panda"
+    "a library|a deer|an oil painting of|library_deer"
+    "a coral reef|an octopus|a watercolor of|reef_octopus"
+    "a grandfather clock|an owl|a painting of|clock_owl"
+    "a garden|a butterfly|an oil painting of|garden_butterfly"
+    "a lighthouse|a whale|a lithograph of|lighthouse_whale"
+    "musical instruments|a peacock|a painting of|instruments_peacock"
+    "a medieval knight|a dragon|an oil painting of|knight_dragon"
+    "a coffee shop|a fox|a watercolor of|coffee_fox"
+    "flower arrangements|a sloth|an oil painting of|flowers_sloth"
+    "a teddy bear|a giraffe|an oil painting of|teddy_giraffe"
+    "a dining table|a polar bear|a painting of|table_bear"
+    "ancient ruins|a tiger|a lithograph of|ruins_tiger"
+    "a bakery|a raccoon|a watercolor of|bakery_raccoon"
+    "a robot|a tree|a sketch of|robot_tree"
+    "a telescope|a rabbit|an ink drawing of|telescope_rabbit"
+    "venice canals|a swan|an oil painting of|venice_swan"
+    "a wizard|a mushroom forest|a painting of|wizard_forest"
 )
 
 
 
 # Common generation parameters
-NUM_SAMPLES=2
+NUM_SAMPLES=10
 NUM_INFERENCE_STEPS=30
 GUIDANCE_SCALE=10.0
 SEED=0
