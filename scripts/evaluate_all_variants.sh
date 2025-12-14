@@ -13,31 +13,31 @@ declare -a PROMPT_NAMES=(
     "fruit_monkey"
     "plants_marilyn"
     "kitten_puppy"
-    "house_castle"
-    "wine_turtle"
-    "kitchen_quokka"
-    "museum_camel"
-    "sunflowers_vampire"
-    "village_horse"
-    "ship_bird"
-    "waterfalls_panda"
-    "library_deer"
-    "reef_octopus"
-    "clock_owl"
-    "garden_butterfly"
-    "lighthouse_whale"
-    "instruments_peacock"
-    "knight_dragon"
-    "coffee_fox"
-    "flowers_sloth"
-    "teddy_giraffe"
-    "table_bear"
-    "ruins_tiger"
-    "bakery_raccoon"
-    "robot_tree"
-    "telescope_rabbit"
-    "venice_swan"
-    "wizard_forest"
+    # "house_castle"
+    # "wine_turtle"
+    # "kitchen_quokka"
+    # "museum_camel"
+    # "sunflowers_vampire"
+    # "village_horse"
+    # "ship_bird"
+    # "waterfalls_panda"
+    # "library_deer"
+    # "reef_octopus"
+    # "clock_owl"
+    # "garden_butterfly"
+    # "lighthouse_whale"
+    # "instruments_peacock"
+    # "knight_dragon"
+    # "coffee_fox"
+    # "flowers_sloth"
+    # "teddy_giraffe"
+    # "table_bear"
+    # "ruins_tiger"
+    # "bakery_raccoon"
+    # "robot_tree"
+    # "telescope_rabbit"
+    # "venice_swan"
+    # "wizard_forest"
 )
 
 IMAGE_SIZE=1024
@@ -61,7 +61,7 @@ for name in "${PROMPT_NAMES[@]}"; do
     
     # Evaluate each variant
     for variant in 0 1 2 3; do
-        results_dir="results/flip.${name}.variant${variant}"
+        results_dir="results/rotate_cw.${name}.variant${variant}"
         
         if [ -d "$results_dir" ]; then
             echo ""
@@ -99,7 +99,7 @@ for name in "${PROMPT_NAMES[@]}"; do
     variant_dirs=()
     missing_evals=0
     for variant in 0 1 2 3; do
-        results_dir="results/flip.${name}.variant${variant}"
+        results_dir="results/rotate_cw.${name}.variant${variant}"
         eval_file="${results_dir}/evaluation_${IMAGE_SIZE}.json"
         
         if [ -d "$results_dir" ]; then
@@ -169,7 +169,7 @@ missing_count = 0
 
 for name in prompt_names:
     for variant in [0, 1, 2, 3]:
-        eval_file = Path(f"results/flip.{name}.variant{variant}/evaluation_1024.json")
+        eval_file = Path(f"results/rotate_cw.{name}.variant{variant}/evaluation_1024.json")
         if eval_file.exists():
             try:
                 with open(eval_file) as f:

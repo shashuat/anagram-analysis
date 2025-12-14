@@ -1,9 +1,9 @@
 # src/__init__.py
 
-# import os
+import os
 # from dotenv import load_dotenv
 # import wandb
-# from pathlib import Path
+from pathlib import Path
 
 # # # Set environment variables for caching
 # # os.environ["HF_HOME"] = "/Data/shash/.cache"
@@ -31,7 +31,7 @@
 # # else:
 # #     print("WANDB_TOKEN not found in .env file.")
 
-# # Define project paths
-# root = Path(__file__).parent.parent
-# outputs = root / "outputs"
-# outputs.mkdir(parents=True, exist_ok=True)
+# Define project paths
+root = Path(__file__).parent.parent
+outputs = root / "outputs"
+outputs.mkdir(parents=True, exist_ok=True)
