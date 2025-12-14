@@ -12,8 +12,8 @@ declare -a PROMPT_PAIRS=(
     "dog|cat|a photorealistic picture of|dog_cat"
     "people at a campfire|an old man|a futuristic sytle image of|campfire_man"
     # "a fruit bowl|a monkey|an oil painting of|fruit_monkey"
-    # "houseplants|marilyn monroe|a painting of|plants_marilyn"
-    "a kitten|a puppy|a photorealistic picture of|kitten_puppy"
+    "houseplants|a photorealistic picture of|a painting of|plants_marilyn"
+    # "a kitten|a puppy|a photorealistic picture of|kitten_puppy"
     # "a house|a castle|an ink drawing of|house_castle"
     # "wine and cheese|a turtle|a painting of|wine_turtle"
     # "a kitchen|a quokka|an oil painting of|kitchen_quokka"
@@ -83,52 +83,52 @@ for pair in "${PROMPT_PAIRS[@]}"; do
     
     echo "✓ Variant 0 complete"
     
-    # # Variant 1: SDXL Baseline
-    # echo ""
-    # echo "--- Variant 1: SDXL Baseline ---"
-    # python -m visual_anagrams.generate_variant1_sdxl \
-    #     --name "flip.${name}.variant1" \
-    #     --prompts "$prompt1" "$prompt2" \
-    #     --style "$style" \
-    #     --views identity flip \
-    #     --num_samples $NUM_SAMPLES \
-    #     --num_inference_steps $NUM_INFERENCE_STEPS \
-    #     --guidance_scale $GUIDANCE_SCALE \
-    #     --seed $SEED \
-    #     --generate_1024
+    # Variant 1: SDXL Baseline
+    echo ""
+    echo "--- Variant 1: SDXL Baseline ---"
+    python -m visual_anagrams.generate_variant1_sdxl \
+        --name "flip.${name}.variant1" \
+        --prompts "$prompt1" "$prompt2" \
+        --style "$style" \
+        --views identity flip \
+        --num_samples $NUM_SAMPLES \
+        --num_inference_steps $NUM_INFERENCE_STEPS \
+        --guidance_scale $GUIDANCE_SCALE \
+        --seed $SEED \
+        --generate_1024
     
     # echo "✓ Variant 1 complete"
     
-    # # Variant 2: Adaptive Progressive
-    # echo ""
-    # echo "--- Variant 2: Adaptive Progressive ---"
-    # python -m visual_anagrams.generate_variant2_adaptive \
-    #     --name "flip.${name}.variant2" \
-    #     --prompts "$prompt1" "$prompt2" \
-    #     --style "$style" \
-    #     --views identity flip \
-    #     --num_samples $NUM_SAMPLES \
-    #     --num_inference_steps $NUM_INFERENCE_STEPS \
-    #     --guidance_scale $GUIDANCE_SCALE \
-    #     --seed $SEED \
-    #     --generate_1024
+    # Variant 2: Adaptive Progressive
+    echo ""
+    echo "--- Variant 2: Adaptive Progressive ---"
+    python -m visual_anagrams.generate_variant2_adaptive \
+        --name "flip.${name}.variant2" \
+        --prompts "$prompt1" "$prompt2" \
+        --style "$style" \
+        --views identity flip \
+        --num_samples $NUM_SAMPLES \
+        --num_inference_steps $NUM_INFERENCE_STEPS \
+        --guidance_scale $GUIDANCE_SCALE \
+        --seed $SEED \
+        --generate_1024
     
     # echo "✓ Variant 2 complete"
     
-    # # Variant 3: Frequency + Momentum
-    # echo ""
-    # echo "--- Variant 3: Frequency + Momentum ---"
-    # python -m visual_anagrams.generate_variant3_frequency \
-    #     --name "flip.${name}.variant3" \
-    #     --prompts "$prompt1" "$prompt2" \
-    #     --style "$style" \
-    #     --views identity flip \
-    #     --num_samples $NUM_SAMPLES \
-    #     --num_inference_steps $NUM_INFERENCE_STEPS \
-    #     --guidance_scale $GUIDANCE_SCALE \
-    #     --seed $SEED \
-    #     --generate_1024 \
-    #     --momentum_beta 0.9
+    # Variant 3: Frequency + Momentum
+    echo ""
+    echo "--- Variant 3: Frequency + Momentum ---"
+    python -m visual_anagrams.generate_variant3_frequency \
+        --name "flip.${name}.variant3" \
+        --prompts "$prompt1" "$prompt2" \
+        --style "$style" \
+        --views identity flip \
+        --num_samples $NUM_SAMPLES \
+        --num_inference_steps $NUM_INFERENCE_STEPS \
+        --guidance_scale $GUIDANCE_SCALE \
+        --seed $SEED \
+        --generate_1024 \
+        --momentum_beta 0.9
     
     # echo "✓ Variant 3 complete"
     
