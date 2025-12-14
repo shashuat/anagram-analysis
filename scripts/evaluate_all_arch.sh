@@ -20,11 +20,11 @@ echo ""
 
 # Configuration
 PROMPT_PAIRS=(
-    "jigsaw.dog_cat"
-    "jigsaw.campfire_man"
-    "jigsaw.fruit_monkey"
-    "jigsaw.plants_marilyn"
-    "jigsaw.kitten_puppy"
+    "inner_circle.dog_cat"
+    "inner_circle.campfire_man"
+    "inner_circle.fruit_monkey"
+    "inner_circle.plants_marilyn"
+    "inner_circle.kitten_puppy"
 )
 
 VARIANTS=(0 1 2 3)

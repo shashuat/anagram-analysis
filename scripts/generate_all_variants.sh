@@ -9,11 +9,11 @@ set -e  # Exit on error
 
 # Define prompt pairs (prompt1, prompt2, style, short_name)
 declare -a PROMPT_PAIRS=(
-    "dog|cat|an oil painting of|dog_cat"
-    "people at a campfire|an old man|an oil painting of|campfire_man"
-    "a fruit bowl|a monkey|an oil painting of|fruit_monkey"
-    "houseplants|marilyn monroe|a painting of|plants_marilyn"
-    "a kitten|a puppy|a watercolor of|kitten_puppy"
+    "dog|cat|a photorealistic picture of|dog_cat"
+    "people at a campfire|an old man|a futuristic sytle image of|campfire_man"
+    # "a fruit bowl|a monkey|an oil painting of|fruit_monkey"
+    # "houseplants|marilyn monroe|a painting of|plants_marilyn"
+    "a kitten|a puppy|a photorealistic picture of|kitten_puppy"
     # "a house|a castle|an ink drawing of|house_castle"
     # "wine and cheese|a turtle|a painting of|wine_turtle"
     # "a kitchen|a quokka|an oil painting of|kitchen_quokka"
@@ -71,10 +71,10 @@ for pair in "${PROMPT_PAIRS[@]}"; do
     echo ""
     echo "--- Variant 0: Original Author Implementation ---"
     python -m visual_anagrams.generate_variant0_author \
-        --name "inner_circle.${name}.variant0" \
+        --name "flip.${name}.variant0" \
         --prompts "$prompt1" "$prompt2" \
         --style "$style" \
-        --views identity inner_circle \
+        --views identity flip \
         --num_samples $NUM_SAMPLES \
         --num_inference_steps $NUM_INFERENCE_STEPS \
         --guidance_scale $GUIDANCE_SCALE \

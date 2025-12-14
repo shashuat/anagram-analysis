@@ -61,7 +61,7 @@ for name in "${PROMPT_NAMES[@]}"; do
     
     # Evaluate each variant
     for variant in 0 1 2 3; do
-        results_dir="results/rotate_cw.${name}.variant${variant}"
+        results_dir="results/flip.${name}.variant${variant}"
         
         if [ -d "$results_dir" ]; then
             echo ""
@@ -99,7 +99,7 @@ for name in "${PROMPT_NAMES[@]}"; do
     variant_dirs=()
     missing_evals=0
     for variant in 0 1 2 3; do
-        results_dir="results/rotate_cw.${name}.variant${variant}"
+        results_dir="results/flip.${name}.variant${variant}"
         eval_file="${results_dir}/evaluation_${IMAGE_SIZE}.json"
         
         if [ -d "$results_dir" ]; then
@@ -169,7 +169,7 @@ missing_count = 0
 
 for name in prompt_names:
     for variant in [0, 1, 2, 3]:
-        eval_file = Path(f"results/rotate_cw.{name}.variant{variant}/evaluation_1024.json")
+        eval_file = Path(f"results/flip.{name}.variant{variant}/evaluation_1024.json")
         if eval_file.exists():
             try:
                 with open(eval_file) as f:
