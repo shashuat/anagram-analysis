@@ -35,5 +35,9 @@ urllib3
 zipp
 wandb
 python-dotenv
-
+numpy
+pandas
+scipy
+seaborn
+matplotlib
 
