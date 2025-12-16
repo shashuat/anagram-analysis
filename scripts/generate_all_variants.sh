@@ -19,8 +19,8 @@ declare -a PROMPT_PAIRS=(
     # "a kitchen|a quokka|an oil painting of|kitchen_quokka"
     # "a museum|a camel|a painting of|museum_camel"
     # "sunflowers|a vampire|a painting of|sunflowers_vampire"
-    # "a snowy mountain village|a horse|an oil painting of|village_horse"
-    # "a ship|a bird|an oil painting of|ship_bird"
+    "a snowy mountain village|a horse|an oil painting of|village_horse"
+    "a ship|a bird|an oil painting of|ship_bird"
     # "waterfalls|a red panda|a painting of|waterfalls_panda"
     # "a library|a deer|an oil painting of|library_deer"
     # "a coral reef|an octopus|a watercolor of|reef_octopus"
@@ -38,13 +38,13 @@ declare -a PROMPT_PAIRS=(
     # "a robot|a tree|a sketch of|robot_tree"
     # "a telescope|a rabbit|an ink drawing of|telescope_rabbit"
     # "venice canals|a swan|an oil painting of|venice_swan"
-    # "a wizard|a mushroom forest|a painting of|wizard_forest"
+    "a wizard|a mushroom forest|a painting of|wizard_forest"
 )
 
 
 
 # Common generation parameters
-NUM_SAMPLES=4
+NUM_SAMPLES=1
 NUM_INFERENCE_STEPS=30
 GUIDANCE_SCALE=10.0
 SEED=0
