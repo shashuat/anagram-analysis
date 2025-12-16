@@ -4,43 +4,6 @@
 
 A comprehensive research project for analyzing and comparing different architectural approaches to generating multi-view optical illusions (visual anagrams) using diffusion models. This project extends the original [Visual Anagrams](https://dangeng.github.io/visual_anagrams/) (CVPR 2024 Oral) work by Daniel Geng, Aaron Park, and Andrew Owens.
 
-## 🎯 Project Overview
-
-Visual anagrams are images that change appearance or identity when transformed—for example, an image might appear as a "horse" normally but reveal a "village" when rotated 90 degrees. This project implements and compares multiple variant approaches to generating these optical illusions, with a focus on:
-
-1. **Architecture Comparison**: Testing CNN (ResNet) vs ViT (Vision Transformer) biases in perceiving illusions
-2. **Generation Method Variants**: Comparing DeepFloyd IF (pixel-space) vs Stable Diffusion XL (latent-space) approaches
-3. **Quality Enhancement**: Exploring adaptive weighting and frequency-aware scheduling techniques
-4. **Quantitative Evaluation**: Comprehensive metrics for alignment, concealment, and cross-architecture agreement
-
-## ✨ Key Features
-
-- **Multiple Generation Variants** (4 variants total):
-  - **Variant 0**: Original DeepFloyd IF implementation (pixel-space diffusion)
-  - **Variant 1**: Stable Diffusion XL baseline (latent-space diffusion)
-  - **Variant 2**: Adaptive progressive weighting approach
-  - **Variant 3**: Frequency-aware scheduling with momentum stabilization
-
-- **Architecture-Aware Evaluation**:
-  - Dual evaluation using CNN (ResNet-50) and ViT (Vision Transformer) encoders
-  - Measures how architectural biases affect illusion perception
-  - Cross-architecture agreement and correlation metrics
-
-- **Comprehensive Metrics**:
-  - **Alignment Score (A)**: How well each view matches its intended prompt
-  - **Concealment Score (C)**: How well alternative views are hidden
-  - **Architecture Gap (Δ)**: Performance difference between CNN and ViT
-  - Statistical analysis with quantiles (90th, 95th percentiles)
-
-- **Supported Transformations**:
-  - Rotation (90°, 180°, 270°)
-  - Flip (horizontal/vertical)
-  - Inner circle rotation
-  - Jigsaw rearrangement
-  - Color inversion
-  - Patch/pixel permutation
-  - And more...
-
 ## 📋 Requirements
 
 ### System Requirements
@@ -269,6 +232,43 @@ python -m visual_anagrams.generate_variant3_frequency \
     --momentum_beta 0.9
 ```
 
+## 🎯 Project Overview
+
+Visual anagrams are images that change appearance or identity when transformed—for example, an image might appear as a "horse" normally but reveal a "village" when rotated 90 degrees. This project implements and compares multiple variant approaches to generating these optical illusions, with a focus on:
+
+1. **Architecture Comparison**: Testing CNN (ResNet) vs ViT (Vision Transformer) biases in perceiving illusions
+2. **Generation Method Variants**: Comparing DeepFloyd IF (pixel-space) vs Stable Diffusion XL (latent-space) approaches
+3. **Quality Enhancement**: Exploring adaptive weighting and frequency-aware scheduling techniques
+4. **Quantitative Evaluation**: Comprehensive metrics for alignment, concealment, and cross-architecture agreement
+
+## ✨ Key Features
+
+- **Multiple Generation Variants** (4 variants total):
+  - **Variant 0**: Original DeepFloyd IF implementation (pixel-space diffusion)
+  - **Variant 1**: Stable Diffusion XL baseline (latent-space diffusion)
+  - **Variant 2**: Adaptive progressive weighting approach
+  - **Variant 3**: Frequency-aware scheduling with momentum stabilization
+
+- **Architecture-Aware Evaluation**:
+  - Dual evaluation using CNN (ResNet-50) and ViT (Vision Transformer) encoders
+  - Measures how architectural biases affect illusion perception
+  - Cross-architecture agreement and correlation metrics
+
+- **Comprehensive Metrics**:
+  - **Alignment Score (A)**: How well each view matches its intended prompt
+  - **Concealment Score (C)**: How well alternative views are hidden
+  - **Architecture Gap (Δ)**: Performance difference between CNN and ViT
+  - Statistical analysis with quantiles (90th, 95th percentiles)
+
+- **Supported Transformations**:
+  - Rotation (90°, 180°, 270°)
+  - Flip (horizontal/vertical)
+  - Inner circle rotation
+  - Jigsaw rearrangement
+  - Color inversion
+  - Patch/pixel permutation
+  - And more...
+
 ## 📊 Evaluation Metrics
 
 ### Alignment Score (A)
@@ -312,36 +312,6 @@ Measures how similarly CNN and ViT perceive the illusion:
 - **Agreement**: Percentage of samples where both architectures agree on best view
 - **Correlation**: Pearson correlation of score matrices
 
-## 🗂️ Project Structure
-
-```
-anagram-analysis/
-├── visual_anagrams/           # Main package
-│   ├── generate_variant0_author.py    # Original DeepFloyd IF
-│   ├── generate_variant1_sdxl.py      # SDXL baseline
-│   ├── generate_variant2_adaptive.py  # Adaptive weighting
-│   ├── generate_variant3_frequency.py # Frequency-aware
-│   ├── evaluate.py                    # Standard evaluation
-│   ├── evaluate_arch_comparison.py    # CNN vs ViT evaluation
-│   ├── compare_variants.py            # Cross-variant comparison
-│   ├── compare_arch_variants.py       # Architecture comparison
-│   ├── animate.py                     # Create animations
-│   ├── samplers.py                    # Sampling algorithms
-│   ├── utils.py                       # Utilities
-│   └── views/                         # Transformation definitions
-├── scripts/                   # Batch processing scripts
-│   ├── generate_all_variants.sh       # Batch generation
-│   ├── evaluate_all_arch.sh           # Batch evaluation
-│   └── evaluate_all_variants.sh       # Standard batch eval
-├── results/                   # Generated illusions (organized by experiment)
-├── results_cw/               # Rotation experiments
-├── results_flip/             # Flip experiments
-├── results_arch_flip/        # Architecture comparison results
-├── requirements.txt          # Python dependencies
-├── pyproject.toml           # Project configuration
-├── LICENSE                  # Apache 2.0 license
-└── README.md               # This file
-```
 
 ## 🎨 Tips for Choosing Prompts
 
@@ -365,8 +335,6 @@ Based on experimentation and the original paper's guidance:
   
 - **Abstract concepts**: Hard to recognize instantly
   
-- **3-4 view illusions**: Significantly harder than 2-view
-  - Need very compatible prompts
 
 ### 💡 General Advice
 
@@ -383,9 +351,7 @@ The `results/` directories contain generated illusions organized by:
 
 Each result directory includes:
 - `0000/`, `0001/`, ... : Individual samples
-  - `sample_64.png` : 64×64 image
-  - `sample_256.png` : 256×256 image
-  - `sample_1024.png` : 1024×1024 image (if `--generate_1024` used)
+  - `sample_1024.png` : 1024×1024 image 
 - `metadata.pkl` : Generation parameters and view information
 - `evaluation_1024.json` : CLIP evaluation results (standard)
 - `evaluation_arch_1024.json` : Architecture comparison results
@@ -401,21 +367,6 @@ Views are defined in `visual_anagrams/views/`. To create custom transformations:
 3. For permutation-based views, use `PermuteView` class
 
 See existing views for examples.
-
-### Memory Optimization
-
-For limited GPU memory:
-
-```bash
-# Use smaller batch sizes
---num_samples 1
-
-# Skip 1024×1024 generation
-# (omit --generate_1024 flag)
-
-# Use CPU offloading (automatically enabled)
-# Models are moved to CPU when not in use
-```
 
 ### Hyperparameter Tuning
 
@@ -451,9 +402,6 @@ This is a research project. Contributions, suggestions, and discussions are welc
 - Three-view and four-view illusion techniques
 - Quality improvements for specific transformation types
 
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -472,8 +420,6 @@ This project builds upon the original [Visual Anagrams](https://dangeng.github.i
 
 Thanks to:
 - Daniel Geng, Aaron Park, and Andrew Owens for the original implementation and paper
-- The Hugging Face team for `diffusers` and model hosting
-- OpenAI for CLIP
 
 ## 📞 Contact
 
