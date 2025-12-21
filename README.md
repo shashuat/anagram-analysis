@@ -6,7 +6,13 @@ A comprehensive research project for analyzing and comparing different architect
 
 ## Demo
 
-https://github.com/shashuat/anagram-analysis/blob/main/pics/Visual_Anagrams.mp4
+
+
+https://github.com/user-attachments/assets/c4d3c88b-a764-4a3f-ab47-efc2adf9c68d
+
+
+
+
 
 ## 📋 Requirements
 
