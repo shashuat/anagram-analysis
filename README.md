@@ -7,7 +7,10 @@ A comprehensive research project for analyzing and comparing different architect
 ## Demo
 
 
-https://github.com/user-attachments/assets/59d3b3fd-d4d3-4b40-a1ef-044d8ad9307f
+
+https://github.com/user-attachments/assets/c4d3c88b-a764-4a3f-ab47-efc2adf9c68d
+
+
 
 
 
