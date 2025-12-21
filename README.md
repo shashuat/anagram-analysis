@@ -4,6 +4,10 @@
 
 A comprehensive research project for analyzing and comparing different architectural approaches to generating multi-view optical illusions (visual anagrams) using diffusion models. This project extends the original [Visual Anagrams](https://dangeng.github.io/visual_anagrams/) (CVPR 2024 Oral) work by Daniel Geng, Aaron Park, and Andrew Owens.
 
+## Demo
+
+https://github.com/shashuat/anagram-analysis/blob/main/pics/Visual_Anagrams.mp4
+
 ## 📋 Requirements
 
 ### System Requirements
