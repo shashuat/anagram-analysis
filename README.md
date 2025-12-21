@@ -1,6 +1,6 @@
 # Visual Anagrams Analysis
 
-**Author:** [@shashuat](https://github.com/shashuat)
+**Authors:** [@shashuat](https://github.com/shashuat); [@Bossbap](https://github.com/Bossbap)
 
 A comprehensive research project for analyzing and comparing different architectural approaches to generating multi-view optical illusions (visual anagrams) using diffusion models. This project extends the original [Visual Anagrams](https://dangeng.github.io/visual_anagrams/) (CVPR 2024 Oral) work by Daniel Geng, Aaron Park, and Andrew Owens.
 
